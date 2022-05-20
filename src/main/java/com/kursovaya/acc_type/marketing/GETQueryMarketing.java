@@ -19,7 +19,7 @@ public class GETQueryMarketing {
                 String name = rs.getString("name");
                 int procent = rs.getInt("procent");
                 int members = rs.getInt("members");
-                System.out.println(name + " ---- "+procent+"%"+" ---- "+members+" чел.");
+                System.out.println(name + " ---- "+procent+"%"+" ---- "+members+" per.");
             }
         } catch (SQLException e) {
             MarketingMainMenu.backToMenu();
@@ -49,7 +49,7 @@ public class GETQueryMarketing {
             while (rs.next()){
                 String name = rs.getString("name");
                 int budget = rs.getInt("budget");
-                System.out.println(name+" ---- "+budget+" сом");
+                System.out.println(name+" ---- "+budget+" som");
             }
         } catch (SQLException e) {
             MarketingMainMenu.backToMenu();
@@ -66,7 +66,7 @@ public class GETQueryMarketing {
                 int budget = rs.getInt("budget");
                 sum += budget;
             }
-            System.out.println("Выделенный бюджет для маркетинга ---- "+sum+" сом");
+            System.out.println("Dedicated budget for marketing ---- "+sum+" som");
         } catch (SQLException e) {
             MarketingMainMenu.backToMenu();
         }
@@ -97,7 +97,7 @@ public class GETQueryMarketing {
                     budget = budget-money;
                     return budget;
                 }else{
-                    System.out.println("Указанная вами сумма превышает бюджет для этой категории.");
+                    System.out.println("The amount you have listed is more than the budget for this category.");
                     MarketingMainMenu.backToMenu();
                 }
             }
@@ -112,10 +112,10 @@ public class GETQueryMarketing {
         try {
             Statement statement = db.getConnection().createStatement();
             statement.executeUpdate(query);
-            System.out.println("Успешно потраченно!");
+            System.out.println("Successfully spent!");
             MarketingMainMenu.backToMenu();
         } catch (SQLException e) {
-            System.out.println("Упс... Что-то пошло не так.");
+            System.out.println("Oops... Something went wrong.");
             MarketingMainMenu.backToMenu();
         }
 

@@ -9,14 +9,14 @@ public class DirectorMainMenu {
     static final Scanner sc = new Scanner(System.in);
 
     public static void directorMainMenu(){
-        System.out.println("Приветствую дорогой, Директор!\n" +
-                "Пожалуйста наберите номер меню для работы с программой, если закончили, то наберите 6:\n"+
-                "1 - Показать список всех зон покрытия. \n"+
-                        "2 -Показать список категорий бюджета.    \n"+
-                        "3 - Показать выделенный бюджет для определенной категории мест для маркетинга.  \n"+
-                        "4 - Повысить зарплату сотруднику   \n"+
-                        "5 - Понизить зарплату сотруднику   \n"+
-                        "6 - Выход \n");
+        System.out.println("Greetings, dear Director!\n" +
+                "Please dial the menu number to work with the program, if you have finished, then dial 6:\n"+
+                "1 - Show a list of all coverage areas. \n"+
+                        "2 - Show list of budget categories.    \n"+
+                        "3 - Show the allocated budget for a particular category of marketing locations.  \n"+
+                        "4 - Increase the salary of an employee   \n"+
+                        "5 - Reduce the salary of an employee   \n"+
+                        "6 - Exit \n");
         String menuNumber = sc.nextLine();
         GETQueryMarketing getQueryMarketing = new GETQueryMarketing();
         switch (menuNumber){
@@ -41,7 +41,7 @@ public class DirectorMainMenu {
     }
 
     public static void backToMenu(){
-        System.out.println("Для выходя в главное меню нажмите ENTER");
+        System.out.println("To exit to the main menu, press ENTER");
         String button = sc.nextLine();
         directorMainMenu();
     }

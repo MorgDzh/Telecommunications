@@ -1,141 +1,132 @@
-package com.kursovaya.acc_type.manager;
+package com.kursovaya.acc_type.director;
 
 import com.kursovaya.database.Database;
 import com.kursovaya.login.Login;
+import com.kursovaya.acc_type.marketing.GETQueryMarketing;
+import com.kursovaya.acc_type.manager.GETQueryManager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-public class GETQueryManager {
+public class GETQueryDirector {
+
     static Database db = new Database();
 
-    public void getListOfEmployee(){
-        String query = "SELECT * from users where acc_type = 'employee'";
-        try {
+    public static void getAllBudgetCategory(){
+        String query = "SELECT salary from users";
+        int salaryBudget = 0;
+        try{
             Statement statement = db.getConnection().createStatement();
             ResultSet rs = statement.executeQuery(query);
-            System.out.println("Список сотрудников:");
-            while (rs.next()){
-                String firstName = rs.getString("firstName");
-                String secondName = rs.getString("secondName");
-                String acc_type = rs.getString("acc_type");
-                System.out.println(" | "+firstName+" "+secondName+" | Должность: "+acc_type);
-                System.out.println("--------------------------------------------------");
 
+            while (rs.next()){
+                int salary = rs.getInt("salary");
+                salaryBudget+=salary;
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
             Login.welcomeText();
         }
+        GETQueryMarketing getQueryMarketing = new GETQueryMarketing();
+        getQueryMarketing.getMarketingAllBudget();
+        System.out.println("Dedicated budget for salaries ---- "+salaryBudget + " som");
     }
 
-    public void showAllMyToDoList(){
-        String wordID = Login.wordID;
-        String query = "SELECT * from todo_list where who = '"+wordID+"'";
-        try {
-            Statement statement = db.getConnection().createStatement();
-            ResultSet rs = statement.executeQuery(query);
-            System.out.println("Список дел:");
-            int number = 1;
-            while (rs.next()){
-                String description = rs.getString("description");
-                System.out.println(number + ". "+description);
-                number++;
-            }
-        } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
-            Login.welcomeText();
-        }
-    }
-
-    public void showActiveOrDoneToDo(String status){
-        String wordID = Login.wordID;
-        String query = "SELECT * from todo_list where who = '"+wordID+"' and status = '"+status+"'";
-        try {
-            Statement statement = db.getConnection().createStatement();
-            ResultSet rs = statement.executeQuery(query);
-            if(status.contains("ACTIVE")){
-                System.out.println("Список активных дел:");
-            }else {
-                System.out.println("Список завершенных дел:");
-            }
-            while (rs.next()){
-                int id = rs.getInt("id");
-                String description = rs.getString("description");
-                System.out.println(id + ". "+description);
-            }
-        } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
-            Login.welcomeText();
-        }
-    }
-
-    public void addTaskForToDoList(String task){
-        String wordID = Login.wordID;
-        String query = "INSERT into todo_list(who,description,status) values('"+wordID+"','"+task+"','ACTIVE')";
-        try {
-            Statement statement = db.getConnection().createStatement();
-            statement.execute(query);
-            System.out.println("Успешно добавленно!");
-        } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
-            Login.welcomeText();        }
-    }
-
-    public void updateTaskToDone(){
+    public static void salaryChange(String changeString){
+        GETQueryManager getQueryManager = new GETQueryManager();
+        getListOfEmployeeWithSalary();
         Scanner sc = new Scanner(System.in);
-        showActiveOrDoneToDo("ACTIVE");
-        System.out.println("Введите номер дела, которое хотите завершить:");
-        String taskNumber = sc.nextLine();
-        String wordID = Login.wordID;
-        String query = "update todo_list set status = 'DONE' where id = "+taskNumber+" and who = '"+wordID+"'";
-        try {
+        System.out.println("Type the name of the employee you want to change the salary for:");
+        String name = sc.nextLine();
+        int salary = salaryCheck(name);
+        int userID = getUserId(name);
+        if(changeString.contains("UP")){
+            System.out.println("Indicate the amount of the allowance:");
+            int salaryUp =sc.nextInt();
+            try{
+                salary += salaryUp;
+            }catch (Exception e){
+                DirectorMainMenu.directorMainMenu();
+            }
+        }else{
+            System.out.println("Specify the amount of the deduction:");
+            int salaryUp =sc.nextInt();
+            try{
+                salary -= salaryUp;
+            }catch (Exception e){
+                DirectorMainMenu.directorMainMenu();
+            }
+        }
+     String query = "UPDATE users set salary = "+salary+" where id = "+userID+"";
+        try{
             Statement statement = db.getConnection().createStatement();
             statement.executeUpdate(query);
-            System.out.println("Успешно сделанно!");
+            System.out.println("Successfully done!");
         } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
-            Login.welcomeText();
+            DirectorMainMenu.directorMainMenu();
         }
     }
 
-    public void showAllToDoList(){
-        String query = "SELECT * from todo_list";
-        try {
+    private static int salaryCheck(String name){
+        String query = "SELECT * FROM users";
+        try{
             Statement statement = db.getConnection().createStatement();
             ResultSet rs = statement.executeQuery(query);
-            System.out.println("Список дел всех сотрудников:");
-            while (rs.next()){
-                int id = rs.getInt("id");
-                String description = rs.getString("description");
-                String word = rs.getString("who");
-                System.out.println(id + ". "+description + "---" + getFullNameByWord(word));
-            }
-        } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
-            Login.welcomeText();
-        }
-    }
-
-
-    private String getFullNameByWord(String word){
-        String query = "SELECT * from users where word = '"+word+"'";
-        String fullName = "";
-        try {
-            Statement statement = db.getConnection().createStatement();
-            ResultSet rs = statement.executeQuery(query);
-            while (rs.next()){
+            while(rs.next()){
                 String firstName = rs.getString("firstName");
                 String secondName = rs.getString("secondName");
-                fullName = firstName+" "+secondName;
-                return fullName;
+                String fullName = firstName + " " + secondName;
+                if(fullName.contains(name)){
+                    return rs.getInt("salary");
+                }
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
+            DirectorMainMenu.directorMainMenu();
+        }
+        return 0;
+    }
+
+    private static int getUserId(String name){
+        String query = "SELECT * FROM users";
+        try{
+            Statement statement = db.getConnection().createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while(rs.next()){
+                String firstName = rs.getString("firstName");
+                String secondName = rs.getString("secondName");
+                String fullName = firstName + " " + secondName;
+                if(fullName.contains(name)){
+                    return rs.getInt("id");
+                }
+            }
+        } catch (SQLException e) {
+            DirectorMainMenu.directorMainMenu();
+        }
+        return 0;
+    }
+private static void getListOfEmployeeWithSalary(){
+        String query = "SELECT * from users";
+        try {
+            Statement statement = db.getConnection().createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            System.out.println("List of employees:");
+            while (rs.next()){
+                if(!rs.getString("acc_type").contains("director")){
+                    String firstName = rs.getString("firstName");
+                    String secondName = rs.getString("secondName");
+                    String acc_type = rs.getString("acc_type");
+                    int salary = rs.getInt("salary");
+                    String output = "| "+firstName+" "+secondName+"| Position: "+acc_type+"| Salary: "+salary+" som";
+                    int size = output.length();
+                    System.out.println(output);
+                    System.out.println("--------------------------------------------------");
+
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error! Please try again later.");
             Login.welcomeText();
         }
-        return fullName;
     }
 }

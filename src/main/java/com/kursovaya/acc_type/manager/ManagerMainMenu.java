@@ -13,12 +13,13 @@ public class ManagerMainMenu{
 
 
     public static void managerMainMenu(){
-        System.out.println("Приветствую дорогой, Менеджер!\n" + "Пожалуйста наберите номер меню для работы с программой, если закончили, то наберите 5:\n");
-        System.out.println("1 - Показать список сотрудников\n"+
-                           "2 - Показать список дел \n"+
-                           "3 - Показать список указаний к сотрудникам  \n"+
-                           "4 - Показать список всех зон покрытия  \n"+
-                           "5 - Выход \n");
+        System.out.println("Greetings, dear Manager! Please dial the menu number for the \n" +
+                "program, if you have finished, please dial 5:\n");
+        System.out.println("1 - Show employee list\n"+
+                           "2 - Show to-do list \n"+
+                           "3 - Show list of instructions to employees  \n"+
+                           "4 - Show a list of all coverage areas  \n"+
+                           "5 - Exit \n");
         String menuNumber = sc.nextLine();
         switch (menuNumber){
             case "1":
@@ -39,20 +40,20 @@ public class ManagerMainMenu{
     }
 
     public static void backToMenu(){
-        System.out.println("Для выходя в главное меню нажмите ENTER");
+        System.out.println("To exit to the main menu, press ENTER");
         String button = sc.nextLine();
         managerMainMenu();
     }
 
 
     public static void showToDo(){
-        System.out.println("Выберите: \n"+
-                "1 - Весь список дел \n"+
-                "2 - Список активных дел \n"+
-                "3 - Список завершенных дел \n"+
-                "4 - Добавить дело \n"+
-                "5 - Завершить дело \n"+
-                "6 - Выйти в главное меню \n");
+        System.out.println("Select: \n"+
+                "1 - All to do list \n"+
+                "2 - List of active tasks \n"+
+                "3 - List of done tasks \n"+
+                "4 - Add the task \n"+
+                "5 - Complete the task \n"+
+                "6 - Exit to the main menu \n");
         String todoNumber = sc.nextLine();
         switch (todoNumber){
             case "1":
@@ -65,7 +66,7 @@ public class ManagerMainMenu{
                 getQueryManager.showActiveOrDoneToDo("DONE");
                 backToMenu();
             case "4":
-                System.out.println("Напишите дело, которое нужно добавить:");
+                System.out.println("Write the name of task you want to add:");
                 String task = sc.nextLine();
                 getQueryManager.addTaskForToDoList(task);
                 backToMenu();

@@ -6,14 +6,15 @@ public class MarketingMainMenu {
     static Scanner sc = new Scanner(System.in);
     static GETQueryMarketing getQuery = new GETQueryMarketing();
     public static void marketingMenuText(){
-        System.out.println("Приветствую дорогой, Маркетолог!\n" +
-                "Пожалуйста наберите номер меню для работы с программой, если закончили, то наберите 6\n"+
-                "1 - Показать список всех зон покрытия \n"+
-                "2 - Показать список категорий для маркетинга  \n"+
-                "3 - Показать выделенный бюджет для определенной категории мест для маркетинга  \n"+
-                "4 - Показать общий бюджет для маркетинга \n"+
-                "5 - Потратить бюджет на продвижение \n"+
-                "6 - Выход \n");
+        System.out.println("Greetings, dear Marketer! \n" +
+                "Please dial the menu number to work with the program, if you have finished, then dial 6\n" +
+
+                "1 - Show list of all coverage areas \n" +
+                "2 - Show list of categories for marketing  \n" +
+                "3 - Show the allocated budget for a specific category of locations for marketing  \n" +
+                "4 - Show total budget for marketing \n" +
+                "5 - Spend promotion budget \n" +
+                "6 - Output \n");
         String menuNumber = sc.nextLine();
         switch (menuNumber){
             case "1":
@@ -42,16 +43,16 @@ public class MarketingMainMenu {
 
     private static void spentMoney() {
         getQuery.getOnlyMarketingCategoryName();
-        System.out.println("Напишите название категории:");
+        System.out.println("Write the name of the category:");
         String catName = sc.nextLine();
-        System.out.println("Напишите сумму которую хотите потратить:");
+        System.out.println("Write down the amount you want to spend:");
         int money = sc.nextInt();
         int num = GETQueryMarketing.checkMoney(money);
         getQuery.spentMoneyForPromotion(num,catName);
     }
 
     public static void backToMenu(){
-        System.out.println("Для выходя в главное меню нажмите ENTER");
+        System.out.println("To exit to the main menu, press ENTER.");
         String button = sc.nextLine();
         marketingMenuText();
     }

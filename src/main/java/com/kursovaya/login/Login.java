@@ -38,7 +38,7 @@ public class Login {
                 }
 
             }else{
-                System.out.println("Извините, но мы не нашли такой тип аккаунта.");
+                System.out.println("Sorry, but we did not find this type of account.");
                 System.exit(0);
             }
         } catch (SQLException e) {
@@ -48,10 +48,10 @@ public class Login {
     }
 
     public static void welcomeText(){
-        System.out.println("Для запуска программы, пожалуйста введите тип аккаунта и свое ключевое слово: >>>");
-        System.out.println("Тип аккаунта:");
+        System.out.println("To start the program, please enter your account type and your keyword: >>>");
+        System.out.println("Type of account:");
         String login = sc.nextLine();
-        System.out.println("Ключевое слово:");
+        System.out.println("Keyword:");
         String word = sc.nextLine();
         check(login,word);
     }

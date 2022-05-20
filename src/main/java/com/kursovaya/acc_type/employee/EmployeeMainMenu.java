@@ -1,8 +1,7 @@
 package com.kursovaya.acc_type.employee;
 
-import com.kursovaya.acc_type.manager.GETQueryManager;
-
 import java.util.Scanner;
+import com.kursovaya.acc_type.manager.GETQueryManager;
 
 public class EmployeeMainMenu {
 
@@ -11,13 +10,13 @@ public class EmployeeMainMenu {
     static GETQueryManager getQueryManager = new GETQueryManager();
 
     public static void employeeMainMenu(){
-        System.out.println("Приветствую дорогой, Сотрудник Егор!\n" +
-                "Пожалуйста наберите номер меню для работы с программой, если закончили, то наберите 5:\n");
-        System.out.println("1 - Показать список порученных мне дел.\n"+
-                "2 - Показать список завершенных указаний. \n"+
-                "3 - Показать список дел над, которым я работаю.  \n"+
-                "4 - Показать зарплату  \n"+
-                "5 - Выход \n");
+        System.out.println("Greetings, dear Employee!\n" +
+                "Please dial the menu number to work with the program, if you have finished, then dial 5:\n");
+        System.out.println("1 - Show my to-do list.\n"+
+                "2 - Show list of completed tasks. \n"+
+                "3 - Show the to-do list I'm working on.  \n"+
+                "4 - Show payroll   \n"+
+                "5 - Exit \n");
         String menuNumber = sc.nextLine();
         switch (menuNumber){
             case "1":
@@ -39,7 +38,7 @@ public class EmployeeMainMenu {
     }
 
     public static void backToMenu(){
-        System.out.println("Для выходя в главное меню нажмите ENTER");
+        System.out.println("To exit to the main menu, press ENTER");
         String button = sc.nextLine();
         employeeMainMenu();
     }

@@ -19,7 +19,7 @@ public class GETQueryEmployee {
             ResultSet rs = statement.executeQuery(query);
             if(rs.next()){
                 int salary = rs.getInt("salary");
-                System.out.println("Ваша зарплата --- "+salary);
+                System.out.println("Your salary --- "+salary);
             }
         } catch (SQLException e) {
             EmployeeMainMenu.employeeMainMenu();

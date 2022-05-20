@@ -16,14 +16,17 @@ public class GETQueryManager {
         try {
             Statement statement = db.getConnection().createStatement();
             ResultSet rs = statement.executeQuery(query);
-            System.out.println("Список сотрудников:");
+            System.out.println("Staff list:");
             while (rs.next()){
                 String firstName = rs.getString("firstName");
                 String secondName = rs.getString("secondName");
-                System.out.println("\t"+firstName+" "+secondName);
+                String acc_type = rs.getString("acc_type");
+                System.out.println(" | "+firstName+" "+secondName+" | Position: "+acc_type);
+                System.out.println("--------------------------------------------------");
+
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
+            System.out.println("Error! Please try again later.");
             Login.welcomeText();
         }
     }
@@ -34,7 +37,7 @@ public class GETQueryManager {
         try {
             Statement statement = db.getConnection().createStatement();
             ResultSet rs = statement.executeQuery(query);
-            System.out.println("Список дел:");
+            System.out.println("To-Do List:");
             int number = 1;
             while (rs.next()){
                 String description = rs.getString("description");
@@ -42,7 +45,7 @@ public class GETQueryManager {
                 number++;
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
+            System.out.println("Error! Please try again later.");
             Login.welcomeText();
         }
     }
@@ -54,9 +57,9 @@ public class GETQueryManager {
             Statement statement = db.getConnection().createStatement();
             ResultSet rs = statement.executeQuery(query);
             if(status.contains("ACTIVE")){
-                System.out.println("Список активных дел:");
+                System.out.println("List of active tasks:");
             }else {
-                System.out.println("Список завершенных дел:");
+                System.out.println("List of done tasks:");
             }
             while (rs.next()){
                 int id = rs.getInt("id");
@@ -64,7 +67,7 @@ public class GETQueryManager {
                 System.out.println(id + ". "+description);
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
+            System.out.println("Error! Please try again later.");
             Login.welcomeText();
         }
     }
@@ -75,25 +78,25 @@ public class GETQueryManager {
         try {
             Statement statement = db.getConnection().createStatement();
             statement.execute(query);
-            System.out.println("Успешно добавленно!");
+            System.out.println("Successfully done!");
         } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
+            System.out.println("Error! Please try again later.");
             Login.welcomeText();        }
     }
 
     public void updateTaskToDone(){
         Scanner sc = new Scanner(System.in);
         showActiveOrDoneToDo("ACTIVE");
-        System.out.println("Введите номер дела, которое хотите завершить:");
+        System.out.println("Enter the number of the case you want to complete:");
         String taskNumber = sc.nextLine();
         String wordID = Login.wordID;
         String query = "update todo_list set status = 'DONE' where id = "+taskNumber+" and who = '"+wordID+"'";
         try {
             Statement statement = db.getConnection().createStatement();
             statement.executeUpdate(query);
-            System.out.println("Успешно сделанно!");
+            System.out.println("Successfully done!");
         } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
+            System.out.println("Error! Please try again later.");
             Login.welcomeText();
         }
     }
@@ -103,7 +106,7 @@ public class GETQueryManager {
         try {
             Statement statement = db.getConnection().createStatement();
             ResultSet rs = statement.executeQuery(query);
-            System.out.println("Список дел всех сотрудников:");
+            System.out.println("A to-do list of all employees:");
             while (rs.next()){
                 int id = rs.getInt("id");
                 String description = rs.getString("description");
@@ -111,7 +114,7 @@ public class GETQueryManager {
                 System.out.println(id + ". "+description + "---" + getFullNameByWord(word));
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
+            System.out.println("Error! Please try again later.");
             Login.welcomeText();
         }
     }
@@ -130,7 +133,7 @@ public class GETQueryManager {
                 return fullName;
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка! Повторите позже.");
+            System.out.println("Error! Please try again later.");
             Login.welcomeText();
         }
         return fullName;
